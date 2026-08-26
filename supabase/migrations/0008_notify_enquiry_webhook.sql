@@ -1,0 +1,45 @@
+-- Extension point for future Brevo email notifications (deferred this phase).
+--
+-- This migration documents how the notify-enquiry edge function is wired up.
+-- Supabase Database Webhooks (Dashboard > Database > Webhooks, or the
+-- `supabase functions deploy` + a trigger via `pg_net`) are the recommended
+-- way to fire an edge function on INSERT into public.enquiries. Because the
+-- webhook target URL/secret depends on the linked Supabase project (not
+-- available in this offline scaffold), it is not created here as a blind
+-- SQL trigger. To wire it up once a project is linked, either:
+--
+--   1. Dashboard: Database > Webhooks > Create a new webhook
+--      - Table: public.enquiries, Event: INSERT
+--      - Type: Supabase Edge Function -> notify-enquiry
+--
+--   2. Or SQL, once `pg_net` is enabled and the function URL/secret are known:
+--
+--      create extension if not exists pg_net with schema extensions;
+--
+--      create or replace function public.trigger_notify_enquiry()
+--      returns trigger
+--      language plpgsql
+--      security definer
+--      as $$
+--      begin
+--        perform net.http_post(
+--          url := '<PROJECT_URL>/functions/v1/notify-enquiry',
+--          headers := jsonb_build_object(
+--            'Content-Type', 'application/json',
+--            'Authorization', 'Bearer <SERVICE_ROLE_OR_ANON_KEY>'
+--          ),
+--          body := jsonb_build_object('record', to_jsonb(new))
+--        );
+--        return new;
+--      end;
+--      $$;
+--
+--      create trigger enquiries_notify_after_insert
+--        after insert on public.enquiries
+--        for each row execute function public.trigger_notify_enquiry();
+--
+-- The edge function itself (supabase/functions/notify-enquiry/index.ts)
+-- already exists and currently no-ops / logs to server_logs -- it does not
+-- send email. A future phase can drop real Brevo calls into that function
+-- without touching this schema.
+select 1;
