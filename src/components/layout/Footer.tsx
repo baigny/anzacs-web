@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export function PublicFooter() {
+export function Footer() {
   const year = new Date().getFullYear();
 
   return (
@@ -8,7 +8,7 @@ export function PublicFooter() {
       <div className="container grid gap-10 py-14 md:grid-cols-4">
         <div>
           <div className="inline-block rounded-lg bg-cream p-2">
-            <img src="/logo.png" alt="ANZ Agri Crop Sciences" className="h-9 w-auto" />
+            <img src="/anzacs-web/logo.png" alt="ANZ Agri Crop Sciences" className="h-9 w-auto" />
           </div>
           <p className="mt-3 text-sm text-cream/70">
             Quality hybrid and open-pollinated seeds, backed by plant genetics R&D since 2009.

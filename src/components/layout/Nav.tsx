@@ -11,7 +11,7 @@ const LINKS = [
   { to: "/contact", label: "Contact" },
 ];
 
-export function PublicNav() {
+export function Nav() {
   const { open } = useEnquiryModal();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -24,7 +24,7 @@ export function PublicNav() {
     <header className="sticky top-0 z-40 border-b border-canopy/10 bg-cream/95 backdrop-blur">
       <nav className="container flex h-16 items-center justify-between" aria-label="Primary">
         <NavLink to="/" className="flex items-center gap-2 font-bold text-canopy text-lg">
-          <img src="/logo.png" alt="ANZ Agri Crop Sciences" className="h-9 w-auto" />
+          <img src="/anzacs-web/logo.png" alt="ANZ Agri Crop Sciences" className="h-9 w-auto" />
         </NavLink>
 
         <div className="ml-auto hidden items-center gap-6 lg:flex">

@@ -258,7 +258,7 @@ begin
       p->>'name',
       p->>'slug',
       (select coalesce(array_agg(x), '{}') from jsonb_array_elements_text(p->'regions') x),
-      case when p->>'section' = 'hybrid' then '/images/crops/' || (p->>'slug') || '.jpg' else null end,
+      case when p->>'section' = 'hybrid' then '/anzacs-web/images/crops/' || (p->>'slug') || '.jpg' else null end,
       true,
       0
     )
