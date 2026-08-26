@@ -11,6 +11,17 @@
     <title>ANZ Agri Crop Sciences — Quality Seeds, Trusted Genetics</title>
   </head>
   <body>
+    <script>
+      // Companion to public/404.html's GitHub Pages SPA redirect trick:
+      // restore the originally-requested deep link so react-router can render it.
+      (function () {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, "", redirect);
+        }
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
